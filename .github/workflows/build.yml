@@ -1,0 +1,39 @@
+name: Kernel Build
+on:
+  dispatch_workflow:
+  push:
+    branches: ["mt8183"]
+jobs:
+  build:
+    runs-on: ARM64
+    container:
+        image: registry.fedoraproject.org/fedora-minimal:39
+    steps:
+      - name: Install Toolchain
+        run: |
+          dnf5 up -y
+          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 0
+      - name: Setup enviroment variables
+        run: |
+            echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
+            echo "KERNEL_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Setup ccache cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
+          restore-keys: |
+            ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
+            ccache-${{ matrix.platform }}-
+      - name: Make
+        run: make all
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            mt8183/rpmbuild/RPMS/aarch64/*.rpm
+            mt8183/rpmbuild/SRPMS/*.src.rpm
