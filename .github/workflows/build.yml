@@ -33,7 +33,7 @@ jobs:
       - name: Set git safe directory
         run: git config --global safe.directory '*'
       - name: Make
-        run: make all
+        run: make CC="ccache gcc" all
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
