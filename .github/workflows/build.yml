@@ -1,8 +1,8 @@
 name: Kernel Build
 on:
-  dispatch_workflow:
   push:
     branches: ["mt8183"]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ARM64
