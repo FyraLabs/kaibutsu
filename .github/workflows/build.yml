@@ -1,7 +1,7 @@
 name: Kernel Build
 on:
   push:
-    branches: ["mt8183"]
+    branches: ["main"]
   workflow_dispatch:
 jobs:
   build:
