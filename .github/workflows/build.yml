@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v3
         with:
             fetch-depth: 0
+            submodules: 'recursive'
       - name: Setup enviroment variables
         run: |
             echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
