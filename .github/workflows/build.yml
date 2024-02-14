@@ -29,6 +29,8 @@ jobs:
           restore-keys: |
             ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
             ccache-${{ matrix.platform }}-
+      - name: Set git safe directory
+        run: git config --global safe.directory '*'
       - name: Make
         run: make all
       - name: Upload artifacts
