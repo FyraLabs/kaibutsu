@@ -14,7 +14,7 @@ build:
 	git clean -df; \
 	git fetch origin refs/tags/$(REF):refs/tags/$(REF); \
 	git checkout $(REF); \
-	for patch in $(ls *.patch); do patch -p1 < $patch; done;
+	for patch in $$(ls *.patch); do patch -p1 < "$$patch"; done;
 	
 	ARCH=arm64 CROSS_COMPILE=$(CROSS) make -C ../linux olddefconfig rpm-pkg -j$(shell nproc)
 	cp -r ../linux/rpmbuild .
