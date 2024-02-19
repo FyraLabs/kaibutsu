@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    strategy:
+      matrix:
+        variant: ['mt8183', 'sc7180']
     runs-on: ARM64
     container:
         image: registry.fedoraproject.org/fedora-minimal:39
@@ -33,7 +36,7 @@ jobs:
       - name: Set git safe directory
         run: git config --global safe.directory '*'
       - name: Make
-        run: make CC="ccache gcc" all
+        run: make CC="ccache gcc" ${{matrix.variant}}
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
