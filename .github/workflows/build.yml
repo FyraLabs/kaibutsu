@@ -21,22 +21,24 @@ jobs:
         with:
             fetch-depth: 1
             submodules: 'recursive'
+      - name: Setup each variant 
+        run: make -C ${{ matrix.variant }} setup
       - name: Setup enviroment variables
         run: |
             echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
-            echo "KERNEL_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+            echo "KERNEL_COMMIT=$(cd kernel && git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
+          key: ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles(matrix.variant + '/config') }}
           restore-keys: |
-            ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
-            ccache-${{ matrix.platform }}-
+            ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-
+            ccache-${{ matrix.variant }}-
       - name: Set git safe directory
         run: git config --global safe.directory '*'
       - name: Make
-        run: make CC="ccache gcc" ${{matrix.variant}}
+        run: make -C ${{ matrix.variant }} CC="ccache gcc" compile
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
