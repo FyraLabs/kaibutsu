@@ -15,7 +15,7 @@ jobs:
       - name: Install Toolchain
         run: |
           dnf5 up -y
-          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync
+          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu
       - name: Checkout
         uses: actions/checkout@v3
         with:
