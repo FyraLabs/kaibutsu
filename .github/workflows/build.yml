@@ -26,7 +26,7 @@ jobs:
       - name: Setup enviroment variables
         run: |
             echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
-            echo "KERNEL_COMMIT=$(cd kernel && git rev-parse HEAD)" >> $GITHUB_ENV
+            echo "KERNEL_COMMIT=$(cd linux && git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
