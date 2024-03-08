@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles(format('{0}/config' matrix.variant)) }}
+          key: ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles(format('{0}/config', matrix.variant)) }}
           restore-keys: |
             ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-
             ccache-${{ matrix.variant }}-
