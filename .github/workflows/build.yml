@@ -43,7 +43,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: |
-            mt8183/rpmbuild/RPMS/aarch64/*.rpm
-            mt8183/rpmbuild/SRPMS/*.src.rpm
-            sc7180/rpmbuild/RPMS/aarch64/*.rpm
-            sc7180/rpmbuild/SRPMS/*.src.rpm
+            ${{ format('{0}/rpmbuild/RPMS/aarch64/*.rpm', matrix.variant) }}
+            ${{ format('{0}/rpmbuild/SRPMS/*.src.rpm', matrix.variant) }}
