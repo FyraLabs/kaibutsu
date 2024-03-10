@@ -43,5 +43,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: |
-            ${{ format('{0}/rpmbuild/RPMS/aarch64/*.rpm', matrix.variant) }}
-            ${{ format('{0}/rpmbuild/SRPMS/*.src.rpm', matrix.variant) }}
+            ${{ format('{0}/rpmbuild/RPMS/aarch64/kernel-{0}*.rpm', matrix.variant) }}
+            ${{ format('{0}/rpmbuild/SRPMS/kernel-{0}*.src.rpm', matrix.variant) }}
