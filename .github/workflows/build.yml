@@ -53,4 +53,4 @@ jobs:
           subatomic-cli upload --prune \
             --server https://subatomic.fyralabs.com \
             --token ${{ secrets.SUBATOMIC_TOKEN }} \
-            kaibutsu rpmbuild/SRPMS/* rpmbuild/RPMS/aarch64/*
+            kaibutsu ${{ matrix.variant }}/rpmbuild/SRPMS/* ${{ matrix.variant }}/rpmbuild/RPMS/aarch64/*
