@@ -14,8 +14,9 @@ jobs:
     steps:
       - name: Install Toolchain
         run: |
+          curl https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo -o /etc/yum.repos.d/terra.repo
           dnf5 up -y
-          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu
+          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu subatomic-cli
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -46,3 +47,10 @@ jobs:
           path: |
             ${{ format('{0}/rpmbuild/RPMS/aarch64/kernel-{0}*.rpm', matrix.variant) }}
             ${{ format('{0}/rpmbuild/SRPMS/kernel-{0}*.src.rpm', matrix.variant) }}
+      - name: Upload packages to Subatomic
+        if: github.event_name == 'push'
+        run: |
+          subatomic-cli upload --prune \
+            --server https://subatomic.fyralabs.com \
+            --token ${{ secrets.SUBATOMIC_TOKEN }} \
+            kaibutsu anda-build/rpm/rpms/* anda-build/rpm/srpm/*
