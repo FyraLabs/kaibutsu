@@ -7,7 +7,7 @@ index 3eee0143e0c5..c160678045ca 100644
  %define debug_package %{nil}
  
 -Name: kernel
-+Name: kernel-braswell-baytrail
++Name: kernel-chromebook
  Summary: The Linux Kernel
  Version: %(echo %{KERNELRELEASE} | sed -e 's/-/_/g')
  Release: %{pkg_release}
@@ -16,7 +16,7 @@ index 3eee0143e0c5..c160678045ca 100644
  Group: System Environment/Kernel
  AutoReqProv: no
 -%description -n kernel-devel
-+%description -n kernel-braswell-baytrail-devel
++%description -n kernel-chromebook-devel
  This package provides kernel headers and makefiles sufficient to build modules
  against the %{version} kernel package.
  %endif

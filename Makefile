@@ -1,6 +1,6 @@
 project_name = kaibutsu
 
-.PHONY: usage mt8183 mt8192 sc7180 stoneyridge braswell-baytrail
+.PHONY: usage mt8183 mt8192 sc7180 stoneyridge chromebook
 
 usage:
 	@echo "usage: make [kernel_variant|all]"
@@ -19,5 +19,5 @@ sc7180:
 stoneyridge:
 	make -C stoneyridge build
 
-braswell-baytrail:
-	make -C braswell-baytrail build
+chromebook:
+	make -C chromebook build

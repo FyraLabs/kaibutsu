@@ -1,0 +1,19 @@
+diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+index f58726671fb3..5d9abee61e91 100644
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -71,13 +71,8 @@ rm -rf %{buildroot}
+ 
+ %post
+ if [ -x /usr/bin/kernel-install ]; then
+-	/usr/bin/kernel-install add %{KERNELRELEASE} /lib/modules/%{KERNELRELEASE}/vmlinuz
++  /sbin/installkernel %{KERNELRELEASE} /boot/vmlinuz-%{KERNELRELEASE} /boot/System.map-%{KERNELRELEASE}
+ fi
+-for file in vmlinuz System.map config; do
+-	if ! cmp --silent "/lib/modules/%{KERNELRELEASE}/${file}" "/boot/${file}-%{KERNELRELEASE}"; then
+-		cp "/lib/modules/%{KERNELRELEASE}/${file}" "/boot/${file}-%{KERNELRELEASE}"
+-	fi
+-done
+ 
+ %preun
+ if [ -x /sbin/new-kernel-pkg ]; then
