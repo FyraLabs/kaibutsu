@@ -1,4 +1,4 @@
-name: Kernel Build
+name: Kernel Build ARM64
 on:
   push:
     branches: ["main"]

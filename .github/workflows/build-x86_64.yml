@@ -1,0 +1,56 @@
+name: Kernel Build x86_64
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      matrix:
+        variant: ['stoneyridge']
+    runs-on: ubuntu-latest
+    container:
+        image: registry.fedoraproject.org/fedora-minimal:39
+    steps:
+      - name: Install Toolchain
+        run: |
+          curl -L https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo -o /etc/yum.repos.d/terra.repo
+          dnf5 up -y
+          dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu subatomic-cli
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 1
+            submodules: 'recursive'
+      - name: Setup each variant 
+        run: make -C ${{ matrix.variant }} setup
+      - name: Setup enviroment variables
+        run: |
+            echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
+            echo "KERNEL_COMMIT=$(cd linux && git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Setup ccache cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles(format('{0}/config', matrix.variant)) }}
+          restore-keys: |
+            ccache-${{ matrix.variant }}-${{ env.KERNEL_COMMIT }}-
+            ccache-${{ matrix.variant }}-
+      - name: Set git safe directory
+        run: git config --global safe.directory '*'
+      - name: Make
+        run: make -C ${{ matrix.variant }} CC="ccache gcc" compile
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}
+          path: |
+            ${{ format('{0}/rpmbuild/RPMS/x86_64/kernel-{0}*.rpm', matrix.variant) }}
+            ${{ format('{0}/rpmbuild/SRPMS/kernel-{0}*.src.rpm', matrix.variant) }}
+      - name: Upload packages to Subatomic
+        if: github.event_name == 'push'
+        run: |
+          subatomic-cli upload --prune \
+            --server https://subatomic.fyralabs.com \
+            --token ${{ secrets.SUBATOMIC_TOKEN }} \
+            kaibutsu ${{ matrix.variant }}/rpmbuild/SRPMS/* ${{ matrix.variant }}/rpmbuild/RPMS/x86_64/*
