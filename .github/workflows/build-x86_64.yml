@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        variant: ['stoneyridge']
+        variant: ['stoneyridge', 'braswell-baytrail']
     runs-on: ubuntu-latest
     container:
         image: registry.fedoraproject.org/fedora-minimal:39
