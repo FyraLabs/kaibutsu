@@ -1,0 +1,28 @@
+diff --git a/scripts/package/mkspec b/scripts/package/mkspec
+index f892cf8e37f0..f262e0650673 100755
+--- a/scripts/package/mkspec
++++ b/scripts/package/mkspec
+@@ -39,7 +39,7 @@ EXCLUDES="$RCS_TAR_IGNORE --exclude=*vmlinux* --exclude=*.mod \
+ #  $S: this line is enabled only when building source package
+ #  $M: this line is enabled only when CONFIG_MODULES is enabled
+ sed -e '/^DEL/d' -e 's/^\t*//' <<EOF
+-	Name: kernel
++	Name: kernel-stoneyridge
+ 	Summary: The Linux Kernel
+ 	Version: $__KERNELRELEASE
+ 	Release: $(cat .version 2>/dev/null || echo 1)
+@@ -74,12 +74,12 @@ $S$M	%package devel
+ $S$M	Summary: Development package for building kernel modules to match the $__KERNELRELEASE kernel
+ $S$M	Group: System Environment/Kernel
+ $S$M	AutoReqProv: no
+-$S$M	%description -n kernel-devel
++$S$M	%description -n kernel-stoneyridge-devel
+ $S$M	This package provides kernel headers and makefiles sufficient to build modules
+ $S$M	against the $__KERNELRELEASE kernel package.
+ $S$M
+ $S	%prep
+-$S	%setup -q
++$S	%setup -q -n kernel-6.1.83_dirty
+ $S
+ $S	%build
+ $S	$MAKE %{?_smp_mflags} KBUILD_BUILD_VERSION=%{release}
