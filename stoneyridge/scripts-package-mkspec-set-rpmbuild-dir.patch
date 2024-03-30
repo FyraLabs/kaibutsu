@@ -1,0 +1,12 @@
+diff --git a/scripts/package/mkspec b/scripts/package/mkspec
+index c2b4264d3fdb..edb1601f5c7c 100755
+--- a/scripts/package/mkspec
++++ b/scripts/package/mkspec
+@@ -39,6 +39,7 @@ EXCLUDES="$RCS_TAR_IGNORE --exclude=*vmlinux* --exclude=*.mod \
+ #  $S: this line is enabled only when building source package
+ #  $M: this line is enabled only when CONFIG_MODULES is enabled
+ sed -e '/^DEL/d' -e 's/^\t*//' <<EOF
++ 	%define _rpmdir $(pwd)/rpmbuild
+ 	Name: kernel-stoneyridge
+ 	Summary: The Linux Kernel
+ 	Version: $__KERNELRELEASE
