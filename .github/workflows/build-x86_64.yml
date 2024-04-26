@@ -38,12 +38,8 @@ jobs:
             ccache-${{ matrix.variant }}-
       - name: Set git safe directory
         run: git config --global safe.directory '*'
-      - name: Set git user info
-        run: | 
-          git config --global user.email "ci@fyralabs.com"
-          git config --global user.name "ci"
       - name: Make
-        run: make -C ${{ matrix.variant }} CC="ccache gcc" compile
+        run: git config --global user.email "ci@fyralabs.com" && git config --global user.email "ci@fyralabs.com" && make -C ${{ matrix.variant }} CC="ccache gcc" compile
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
