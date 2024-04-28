@@ -22,6 +22,10 @@ jobs:
         with:
             fetch-depth: 1
             submodules: 'recursive'
+      - name: Set git user
+        run: |
+          git config --global user.name "FyraLabs CI"
+          git config --global user.email "ci@fyralabs.com"
       - name: Setup each variant 
         run: make -C ${{ matrix.variant }} setup
       - name: Setup enviroment variables
