@@ -1,0 +1,25 @@
+diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+index 3eee0143e0c5..a11b779a4033 100644
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -65,6 +65,7 @@ cp $(%{make} %{makeflags} -s image_name) %{buildroot}/boot/vmlinuz-%{KERNELRELEA
+ %endif
+ %{make} %{makeflags} INSTALL_MOD_PATH=%{buildroot} modules_install
+ %{make} %{makeflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
++%{make} %{makeflags} INSTALL_DTBS_PATH=%{buildroot}/boot/dtb-%{KERNELRELEASE} dtbs_install
+ cp System.map %{buildroot}/boot/System.map-%{KERNELRELEASE}
+ cp .config %{buildroot}/boot/config-%{KERNELRELEASE}
+ ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEASE}/build
+@@ -77,11 +78,7 @@ rm -rf %{buildroot}
+ 
+ %post
+ if [ -x /sbin/installkernel -a -r /boot/vmlinuz-%{KERNELRELEASE} -a -r /boot/System.map-%{KERNELRELEASE} ]; then
+-cp /boot/vmlinuz-%{KERNELRELEASE} /boot/.vmlinuz-%{KERNELRELEASE}-rpm
+-cp /boot/System.map-%{KERNELRELEASE} /boot/.System.map-%{KERNELRELEASE}-rpm
+-rm -f /boot/vmlinuz-%{KERNELRELEASE} /boot/System.map-%{KERNELRELEASE}
+-/sbin/installkernel %{KERNELRELEASE} /boot/.vmlinuz-%{KERNELRELEASE}-rpm /boot/.System.map-%{KERNELRELEASE}-rpm
+-rm -f /boot/.vmlinuz-%{KERNELRELEASE}-rpm /boot/.System.map-%{KERNELRELEASE}-rpm
++/sbin/installkernel %{KERNELRELEASE} /boot/vmlinuz-%{KERNELRELEASE} /boot/System.map-%{KERNELRELEASE}
+ fi
+ 
+ %preun
