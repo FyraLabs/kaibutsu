@@ -2,6 +2,7 @@ name: Kernel Build ARM64
 on:
   push:
     branches: ["main"]
+  pull_request:
   workflow_dispatch:
 jobs:
   build:
@@ -52,7 +53,7 @@ jobs:
             ${{ format('{0}/rpmbuild/RPMS/aarch64/kernel-{0}*.rpm', matrix.variant) }}
             ${{ format('{0}/rpmbuild/SRPMS/kernel-{0}*.src.rpm', matrix.variant) }}
       - name: Upload packages to Subatomic
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           subatomic-cli upload --prune \
             --server https://subatomic.fyralabs.com \
