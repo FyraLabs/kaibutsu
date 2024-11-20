@@ -8,10 +8,10 @@ jobs:
   build:
     strategy:
       matrix:
-        variant: ['mt8192', 'mt8183', 'sc7180', 'rpi']
-    runs-on: arm64
+        variant: ["mt8192", "mt8183", "sc7180", "rpi"]
+    runs-on: x86-64-lg
     container:
-        image: registry.fedoraproject.org/fedora-minimal:40
+      image: registry.fedoraproject.org/fedora-minimal:40
     steps:
       - name: Install Toolchain
         run: |
@@ -21,18 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-            fetch-depth: 1
-            submodules: 'recursive'
+          fetch-depth: 1
+          submodules: "recursive"
       - name: Set git user
         run: |
           git config --global user.name "FyraLabs CI"
           git config --global user.email "ci@fyralabs.com"
-      - name: Setup each variant 
+      - name: Setup each variant
         run: make -C ${{ matrix.variant }} setup
       - name: Setup enviroment variables
         run: |
-            echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
-            echo "KERNEL_COMMIT=$(cd linux && git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
+          echo "KERNEL_COMMIT=$(cd linux && git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
