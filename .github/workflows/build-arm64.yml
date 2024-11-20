@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         variant: ["mt8192", "mt8183", "sc7180", "rpi"]
-    runs-on: x86-64-lg
+    runs-on: arm64
     container:
       image: registry.fedoraproject.org/fedora-minimal:40
     steps:
