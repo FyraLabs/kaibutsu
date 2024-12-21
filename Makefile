@@ -1,6 +1,6 @@
 project_name = kaibutsu
 
-.PHONY: usage mt8183 mt8192 sc7180 stoneyridge chromebook rpi
+.PHONY: usage mt8183 mt8192 sc7180 stoneyridge chromebook rpi5
 
 usage:
 	@echo "usage: make [kernel_variant|all]"
