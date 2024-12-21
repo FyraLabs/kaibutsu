@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Install Toolchain
         run: |
-          curl -L https://raw.githubusercontent.com/terrapkg/subatomic-repos/main/terra.repo -o /etc/yum.repos.d/terra.repo
+          dnf5 install --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' --setopt='terra.gpgkey=https://repos.fyralabs.com/terra$releasever/key.asc' terra-release -y
           dnf5 up -y
           dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu subatomic-cli
       - name: Checkout
