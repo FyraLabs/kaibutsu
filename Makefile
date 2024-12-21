@@ -22,5 +22,5 @@ stoneyridge:
 chromebook:
 	make -C chromebook build
 
-rpi:
-	make -C rpi build
+rpi5:
+	make -C rpi5 build

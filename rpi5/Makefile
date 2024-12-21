@@ -7,16 +7,17 @@ endif
 setup:
 	rm -rf ../linux/*.patch
 	cp *.patch ../linux
-	cp config ../linux/.config
 	cd ../linux; \
-	git reset --hard; \
+	git remote remove raspberrypi; \
+	git remote add raspberrypi https://github.com/raspberrypi/linux.git; \
+	git checkout master; \
+	git branch -D $(REF); \
+	git fetch -f raspberrypi refs/heads/$(REF):refs/heads/$(REF); \
+	git reset --hard raspberrypi/$(REF); \
 	git clean -df; \
-	git remote remove rpi; \
-	git remote add rpi https://github.com/raspberrypi/linux.git; \
-	git fetch rpi refs/heads/$(REF):refs/heads/$(REF); \
-	git checkout $(REF); \
 	for patch in $$(ls *.patch); do patch -p1 < "$$patch"; done; \
-  git -c commit.gpgsign=false commit -a -m 'removing -dirty suffix after patches'
+  git -c commit.gpgsign=false commit -a -m 'removing -dirty suffix after patches'; \
+	make ARCH=arm64 bcm2712_defconfig
 	
 compile:
 	ARCH=arm64 CROSS_COMPILE=$(CROSS) make -C ../linux olddefconfig rpm-pkg -j$(shell nproc)

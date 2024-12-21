@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        variant: ["mt8192", "mt8183", "sc7180", "rpi"]
+        variant: ["mt8192", "mt8183", "sc7180", "rpi5"]
     runs-on: x86-64-lg
     container:
       image: registry.fedoraproject.org/fedora-minimal:40

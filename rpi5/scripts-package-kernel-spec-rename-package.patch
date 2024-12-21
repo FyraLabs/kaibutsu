@@ -1,5 +1,5 @@
 diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index 3eee0143e0c5..c160678045ca 100644
+index 3eee0143e0c5..ddc52d125f7c 100644
 --- a/scripts/package/kernel.spec
 +++ b/scripts/package/kernel.spec
 @@ -5,7 +5,7 @@
@@ -7,7 +7,7 @@ index 3eee0143e0c5..c160678045ca 100644
  %define debug_package %{nil}
  
 -Name: kernel
-+Name: kernel-rpi
++Name: kernel-rpi5
  Summary: The Linux Kernel
  Version: %(echo %{KERNELRELEASE} | sed -e 's/-/_/g')
  Release: %{pkg_release}
@@ -16,7 +16,7 @@ index 3eee0143e0c5..c160678045ca 100644
  Group: System Environment/Kernel
  AutoReqProv: no
 -%description -n kernel-devel
-+%description -n kernel-rpi-devel
++%description -n kernel-rpi5-devel
  This package provides kernel headers and makefiles sufficient to build modules
  against the %{version} kernel package.
  %endif
