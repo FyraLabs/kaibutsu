@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         variant: ['stoneyridge', 'chromebook']
-    runs-on: arm64
+    runs-on: x86-64-lg
     container:
         image: registry.fedoraproject.org/fedora-minimal:40
     steps:
