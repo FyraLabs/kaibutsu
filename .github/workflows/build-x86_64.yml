@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Install Toolchain
         run: |
-          curl -L https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo -o /etc/yum.repos.d/terra.repo
+          curl --connect-timeout 7200 -L https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo -o /etc/yum.repos.d/terra.repo
           dnf5 up -y
           dnf5 install -y make gcc ccache flex bison elfutils-devel xz bc tar openssl-devel rpmbuild git dwarves openssl perl python3 rsync gcc-aarch64-linux-gnu subatomic-cli amd-gpu-firmware gcc-x86_64-linux-gnu
       - name: Checkout
