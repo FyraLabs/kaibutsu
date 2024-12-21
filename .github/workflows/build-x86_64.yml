@@ -10,7 +10,7 @@ jobs:
         variant: ['stoneyridge', 'chromebook']
     runs-on: x86-64-lg
     container:
-        image: registry.fedoraproject.org/fedora-minimal:40
+        image: registry.fedoraproject.org/fedora-minimal:41
     steps:
       - name: Install Toolchain
         run: |
