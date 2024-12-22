@@ -1,0 +1,13 @@
+diff --git a/arch/arm64/configs/bcm2712_defconfig b/arch/arm64/configs/bcm2712_defconfig
+index cf1f73f526c9..3b4e3fc1af38 100644
+--- a/arch/arm64/configs/bcm2712_defconfig
++++ b/arch/arm64/configs/bcm2712_defconfig
+@@ -51,7 +51,7 @@ CONFIG_SWP_EMULATION=y
+ CONFIG_CP15_BARRIER_EMULATION=y
+ CONFIG_SETEND_EMULATION=y
+ CONFIG_RANDOMIZE_BASE=y
+-CONFIG_CMDLINE="console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
++# CONFIG_CMDLINE is not set
+ # CONFIG_SUSPEND is not set
+ CONFIG_PM=y
+ CONFIG_PM_DEBUG=y
