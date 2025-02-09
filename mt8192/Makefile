@@ -17,7 +17,7 @@ setup:
   git -c commit.gpgsign=false commit -a -m 'removing -dirty suffix after patches'
 
 compile:
-	ARCH=arm64 CROSS_COMPILE=$(CROSS) make -C ../linux olddefconfig rpm-pkg -j$(shell nproc)
+	ARCH=arm64 CROSS_COMPILE=$(CROSS) make -C ../linux LOCALVERSION= olddefconfig rpm-pkg -j$(shell nproc)
 	cp -r ../linux/rpmbuild .
 	rm -rf ../linux/rpmbuild
 
