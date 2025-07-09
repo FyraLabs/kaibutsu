@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
     runs-on: arm64-lg
     container:
-      image: registry.fedoraproject.org/fedora-minimal:41
+      image: registry.fedoraproject.org/fedora-minimal:42
     steps:
       - name: Install Toolchain
         run: |
