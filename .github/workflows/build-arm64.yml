@@ -8,8 +8,8 @@ jobs:
   build:
     strategy:
       matrix:
-        # variant: ["mt8192", "mt8183", "sc7180", "rpi5", "rpi4"]
-        variant: ["mt8192", "mt8183", "sc7180"]
+        # variant: ["mt81", "mt8192", "mt8183", "sc7180", "rpi5", "rpi4"]
+        variant: ["mt81", "sc7180"]
       fail-fast: false
     runs-on: arm64-lg
     container:
