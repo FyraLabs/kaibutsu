@@ -1,7 +1,7 @@
-diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index 3eee0143e0c5..c160678045ca 100644
---- a/scripts/package/kernel.spec
-+++ b/scripts/package/kernel.spec
+diff --git a/kernel-og.spec b/kernel.spec
+index ac3e5ac..7671b0c 100644
+--- a/kernel-og.spec
++++ b/kernel.spec
 @@ -5,7 +5,7 @@
  %define __spec_install_post /usr/lib/rpm/brp-compress || :
  %define debug_package %{nil}
@@ -11,9 +11,30 @@ index 3eee0143e0c5..c160678045ca 100644
  Summary: The Linux Kernel
  Version: %(echo %{KERNELRELEASE} | sed -e 's/-/_/g')
  Release: %{pkg_release}
-@@ -41,7 +41,7 @@ glibc package.
+@@ -17,6 +17,8 @@ Source0: linux.tar.gz
+ Source1: config
+ Source2: diff.patch
+ Provides: kernel-%{KERNELRELEASE}
++Obsoletes: kernel-mt8183
++Obsoletes: kernel-mt8192
+ BuildRequires: bc binutils bison dwarves
+ BuildRequires: (elfutils-libelf-devel or libelf-devel) flex
+ BuildRequires: gcc make openssl openssl-devel perl python3 rsync
+@@ -27,6 +29,8 @@ The Linux Kernel, the operating system core itself
+ %package headers
+ Summary: Header files for the Linux kernel for use by glibc
+ Group: Development/System
++Obsoletes: kernel-mt8183-headers
++Obsoletes: kernel-mt8192-headers
+ Obsoletes: kernel-headers < %{version}
+ Provides: kernel-headers = %{version}
+ %description headers
+@@ -40,8 +44,10 @@ glibc package.
+ %package devel
  Summary: Development package for building kernel modules to match the %{version} kernel
  Group: System Environment/Kernel
++Obsoletes: kernel-mt8183-devel
++Obsoletes: kernel-mt8192-devel
  AutoReqProv: no
 -%description -n kernel-devel
 +%description -n kernel-mt81-devel
