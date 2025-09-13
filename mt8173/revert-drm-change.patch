@@ -1,0 +1,27 @@
+From 94cb0ae98fc7e8e0ad0dc4e0d8f0dde2beb681a8 Mon Sep 17 00:00:00 2001
+From: Adam Thiede <me@adamthiede.com>
+Date: Mon, 30 Sep 2024 08:08:23 -0500
+Subject: [PATCH] Revert "drm/mediatek: Support DRM plane alpha in OVL"
+
+This reverts commit bc46eb5d5d7780782c70c7915f59ed25a908d550.
+---
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+index 9d6d9fd8342e41..3cf02b4eaff6d1 100644
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+@@ -453,10 +453,8 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
+ 	}
+ 
+ 	con = ovl_fmt_convert(ovl, fmt);
+-	if (state->base.fb) {
+-		con |= OVL_CON_AEN;
+-		con |= state->base.alpha & OVL_CON_ALPHA;
+-	}
++	if (state->base.fb && state->base.fb->format->has_alpha)
++		con |= OVL_CON_AEN | OVL_CON_ALPHA;
+ 
+ 	/* CONST_BLD must be enabled for XRGB formats although the alpha channel
+ 	 * can be ignored, or OVL will still read the value from memory.
