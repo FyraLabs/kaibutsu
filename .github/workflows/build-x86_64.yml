@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         variant: ["chromebook"]
-    runs-on: ubuntu-latest
+    runs-on: x86-64-lg
     container:
       image: registry.fedoraproject.org/fedora-minimal:42
     steps:
