@@ -8,8 +8,8 @@ jobs:
   build:
     strategy:
       matrix:
-        variant: ['chromebook']
-    runs-on: cirun-x86-64-lg--${{ github.run_id }}
+        variant: ['stoneyridge', 'chromebook']
+    runs-on: cirun-x86-64-lg-disk-test--${{ github.run_id }}
     container:
       image: registry.fedoraproject.org/fedora-minimal:42
     steps:
